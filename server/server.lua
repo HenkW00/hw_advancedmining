@@ -69,7 +69,7 @@ end)
 -- Event used to give an item to player upon succesfully smelting
 RegisterNetEvent('hw_advancedmining:rewardSmeltItem')
 AddEventHandler('hw_advancedmining:rewardSmeltItem', function(source, rawItem, item, quantity)
-    local source = source
+    local playerID = source
     local player = GetPlayer(source)
     local distance = checkPlayerDistance(false, Config.SmeltingLocation)
     if player then
@@ -79,13 +79,13 @@ AddEventHandler('hw_advancedmining:rewardSmeltItem', function(source, rawItem, i
             else
                 RemoveItem(source, rawItem, quantity)
                 AddItem(source, item, quantity)
-                sendDiscordDebugLog("Smelting Reward", "Player " .. player .. " rewarded with smelted item: " .. item .. ", Quantity: " .. quantity)
+                sendDiscordDebugLog("Smelting Reward", "Player " .. playerID .. " rewarded with smelted item: " .. item .. ", Quantity: " .. quantity)
                 if Config.Debug then
                     print('^0[^1DEBUG^0] ^5Rewarding smelt item.')
                 end
             end
         else
-            sendDiscordDebugLog("Smelting Error", "Player " .. player .. " not near smelting area.")
+            sendDiscordDebugLog("Smelting Error", "Player " .. playerID .. " not near smelting area.")
             if Config.Debug then
                 print('^0[^1DEBUG^0] ^5Player not near smelting area.')
             end
@@ -97,7 +97,7 @@ end)
 -- Event for paying the player upon successful sale
 RegisterNetEvent('hw_advancedmining:sellItem')
 AddEventHandler('hw_advancedmining:sellItem', function(source, item, quantity, sellValue)
-    local source = source
+    local playerID = source
     local player = GetPlayer(source)
     local distance = checkPlayerDistance(false, Config.Selling.coords)
     if player then
@@ -107,14 +107,14 @@ AddEventHandler('hw_advancedmining:sellItem', function(source, item, quantity, s
             else
                 RemoveItem(source, item, quantity)
                 AddMoney(source, Config.Selling.account, sellValue)
-                sendDiscordDebugLog("Item Sale", "Player " .. player .. " sold item: " .. item .. ", Quantity: " .. quantity .. ", for $" .. sellValue)
+                sendDiscordDebugLog("Item Sale", "Player " .. playerID .. " sold item: " .. item .. ", Quantity: " .. quantity .. ", for $" .. sellValue)
                 if Config.Debug then
                     print('^0[^1DEBUG^0] ^5Processing item sale.')
                 end
                 ServerNotify(source, Notify.soldItems.. sellValue, 'success')
             end
         else
-            sendDiscordDebugLog("Sale Error", "Player " .. player .. " not near selling NPC.")
+            sendDiscordDebugLog("Sale Error", "Player " .. playerID .. " not near selling NPC.")
             if Config.Debug then
                 print('^0[^1DEBUG^0] ^5Player not near selling NPC.')
             end
@@ -126,11 +126,11 @@ end)
 -- Event used to break a pickaxe if enabled
 RegisterNetEvent('hw_advancedmining:breakPickaxe')
 AddEventHandler('hw_advancedmining:breakPickaxe', function(source)
-    local source = source
+    local playerID = source
     local player = GetPlayer(source)
     if player then
         RemoveItem(source, Config.PickaxeItemName, 1)
-        sendDiscordDebugLog("Pickaxe Break", "Player " .. player .. "'s pickaxe broke.")
+        sendDiscordDebugLog("Pickaxe Break", "Player " .. playerID .. "'s pickaxe broke.")
         if Config.Debug then
             print('^0[^1DEBUG^0] ^5Breaking pickaxe.')
         end
