@@ -156,7 +156,7 @@ Config.BlipSettings = {
 }
 
 Notify = {
-    title = 'Mining', -- The title for all notifications
+    title = 'Advanced Mining', -- The title for all notifications
     position = 'top', -- The position for all notifications
     icon = 'fas fa-hill-rockslide', -- The icon for all notifications
     mineAtNight = 'You cannot mine at night - please try again later',
