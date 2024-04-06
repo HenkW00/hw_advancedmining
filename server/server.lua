@@ -51,20 +51,11 @@ AddEventHandler('hw_advancedmining:rewardMineItem', function(source, item)
     local distance = checkPlayerDistance(true, Config.MiningLocations)
     if playerID then
         if distance then
-            -- Check if the inventory is full before adding the item
-            if not IsInventoryFull(source) then
                 AddItem(source, item, math.random(1, 5))
                 sendDiscordDebugLog("__Mining Reward__", "Player **" .. playerID .. "** rewarded with mining item: **" .. item .. "**.")
                 if Config.Debug then
                     print('^0[^1DEBUG^0] ^5Rewarding mining item.^1(^3see discord log for more information^1)^0')
                 end
-            else
-                -- Notify the player (or handle accordingly) that the inventory is full
-                sendDiscordDebugLog("__Mining Error__", "Player **" .. playerID .. "** tried to receive a mining item but inventory is full.")
-                if Config.Debug then
-                    print('^0[^1DEBUG^0] ^5Player inventory is full.^1(^3see discord log for more information^1)^0')
-                end
-            end
         else
             sendDiscordDebugLog("__Mining Error__", "Player **" .. playerID .. "** not near any mine. (maybe he is a cheater?)")
             if Config.Debug then
@@ -74,29 +65,6 @@ AddEventHandler('hw_advancedmining:rewardMineItem', function(source, item)
         end
     end
 end)
-
--- ESX
-function IsInventoryFull(source)
-    local xPlayer = ESX.GetPlayerFromId(source)
-    local items = xPlayer.inventory
-    local totalWeight = 0
-
-    for i=1, #items, 1 do
-        totalWeight = totalWeight + (items[i].count * items[i].weight)
-    end
-
-    return totalWeight >= xPlayer.maxWeight
-end
-
--- QBCORE
--- function IsInventoryFull(source)
---     local Player = QBCore.Functions.GetPlayer(source)
---     local playerWeight = Player.Functions.GetTotalWeight()
---     local maxWeight = Player.PlayerData.items.maxWeight
-
---     return playerWeight >= maxWeight
--- end
-
 
 -- Event used to give an item to player upon succesfully smelting
 RegisterNetEvent('hw_advancedmining:rewardSmeltItem')
@@ -277,7 +245,6 @@ AddEventHandler('onResourceStart', function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then
         return
     end
-
 
     local embed = {
         title = "Resource Started",
