@@ -1,8 +1,8 @@
-# HW Scripts - Black Market (Rewritten)
+# HW Scripts - Advanced Mining (Rewritten)
 
 **Description**
 
-This is an advanced blackmarket script designed to enhance illegal trading RP. The script has been rewritten by HW Development for compatibility with the latest ESX updates.
+A fun mining script for FiveM including mining, smelting & selling materials. Everything is configurable.
 
 **Author**
 - HW Development | HenkW
