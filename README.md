@@ -1,4 +1,4 @@
-# HW Scripts | Advanced Mining
+# HW Scripts | Advanced Mining (Rewritten)
 A fun mining script for FiveM including mining, smelting & selling materials. Everything is configurable. Customize the mining locations, smelting location, selling location. Add more or remove materials, make them "smeltable" and/or "sellable" or not, set a price for each material when selling. Customize how long each material takes to smelt & much more!
 
 ## Features
@@ -23,6 +23,10 @@ A fun mining script for FiveM including mining, smelting & selling materials. Ev
 - Set chance for anticheat check if enabled
 - Customize how long a pickaxe will last before breaking (ox_inventory v2.31.0 or later required)
 
+## Changelog
+- Added Config.Logs to config.file for easy configuration.
+- Optimized server-side.
+- Optimized client-side.
 
 ## Dependencies
 - [ox_lib](https://github.com/overextended/ox_lib/releases)

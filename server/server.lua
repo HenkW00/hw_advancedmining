@@ -27,6 +27,7 @@ local function checkPlayerDistance(mines, coords)
             print('^0[^1DEBUG^0] ^5Checking distance for single location.')
         end
         if distance < 10.0 then
+            Wait(20)
             return true
         end
         return false
@@ -37,6 +38,7 @@ local function checkPlayerDistance(mines, coords)
         for _, location in pairs(coords) do
             local distance = #(playerPos - location)
             if distance < 10.0 then
+                Wait(20)
                 return true
             end
         end
@@ -51,13 +53,18 @@ AddEventHandler('hw_advancedmining:rewardMineItem', function(source, item)
     local distance = checkPlayerDistance(true, Config.MiningLocations)
     if playerID then
         if distance then
+            Wait(20)
                 AddItem(source, item, math.random(1, 5))
-                sendDiscordDebugLog("__Mining Reward__", "Player **" .. playerID .. "** rewarded with mining item: **" .. item .. "**.")
+                if Config.Logs then
+                sendDiscordDebugLog("__⛏️Mining Reward__", "Player **" .. playerID .. "** rewarded with mining item: **" .. item .. "**.")
+                end
                 if Config.Debug then
                     print('^0[^1DEBUG^0] ^5Rewarding mining item.^1(^3see discord log for more information^1)^0')
                 end
         else
-            sendDiscordDebugLog("__Mining Error__", "Player **" .. playerID .. "** not near any mine. (maybe he is a cheater?)")
+            if Config.Logs then
+            sendDiscordDebugLog("__❌Mining Error__", "Player **" .. playerID .. "** not near any mine. (maybe he is a cheater?)")
+            end
             if Config.Debug then
                 print('^0[^1DEBUG^0] ^5Player not near any mine.^1(^3see discord log for more information^1)^0')
             end
@@ -77,15 +84,20 @@ AddEventHandler('hw_advancedmining:rewardSmeltItem', function(source, rawItem, i
             if quantity <= 0 then
                 return
             else
+                Wait(20)
                 RemoveItem(source, rawItem, quantity)
                 AddItem(source, item, quantity)
-                sendDiscordDebugLog("__Smelting Reward__", "Player **" .. playerID .. "** rewarded with smelted item: **" .. item .. "**, Quantity: **" .. quantity .. "**.")
+                if Config.Logs then
+                sendDiscordDebugLog("__🔥Smelting Reward__", "Player **" .. playerID .. "** rewarded with smelted item: **" .. item .. "**, Quantity: **" .. quantity .. "**.")
+                end
                 if Config.Debug then
                     print('^0[^1DEBUG^0] ^5Rewarding smelt item.^1(^3see discord log for more information^1)^0')
                 end
             end
         else
-            sendDiscordDebugLog("__Smelting Error__", "Player **" .. playerID .. "** not near smelting area.")
+            if Config.Logs then
+            sendDiscordDebugLog("__❌Smelting Error__", "Player **" .. playerID .. "** not near smelting area.")
+            end
             if Config.Debug then
                 print('^0[^1DEBUG^0] ^5Player not near smelting area.^1(^3see discord log for more information^1)^0')
             end
@@ -105,16 +117,21 @@ AddEventHandler('hw_advancedmining:sellItem', function(source, item, quantity, s
             if quantity <= 0 then
                 return
             else
+                Wait(20)
                 RemoveItem(source, item, quantity)
                 AddMoney(source, Config.Selling.account, sellValue)
-                sendDiscordDebugLog("__Item Sale__", "Player **" .. playerID .. "** sold item: **" .. item .. "**, Quantity: **" .. quantity .. "**, for **$" .. sellValue .. "**.")
+                if Config.Logs then
+                sendDiscordDebugLog("__💲Item Sale__", "Player **" .. playerID .. "** sold item: **" .. item .. "**, Quantity: **" .. quantity .. "**, for **$" .. sellValue .. "**.")
+                end
                 if Config.Debug then
                     print('^0[^1DEBUG^0] ^5Processing item sale.^1(^3see discord log for more information^1)^0')
                 end
                 ServerNotify(source, Notify.soldItems.. sellValue, 'success')
             end
         else
-            sendDiscordDebugLog("__Sale Error__", "Player **" .. playerID .. "** not near selling NPC.")
+            if Config.Logs then
+            sendDiscordDebugLog("__❌Sale Error__", "Player **" .. playerID .. "** not near selling NPC.")
+            end
             if Config.Debug then
                 print('^0[^1DEBUG^0] ^5Player not near selling NPC.^1(^3see discord log for more information^1)^0')
             end
@@ -129,8 +146,11 @@ AddEventHandler('hw_advancedmining:breakPickaxe', function(source)
     local playerID = source
     local player = GetPlayer(source)
     if player then
+        Wait(20)
         RemoveItem(source, Config.PickaxeItemName, 1)
-        sendDiscordDebugLog("__Pickaxe Break__", "Player **" .. playerID .. "'s** pickaxe broke.")
+        if Config.Logs then
+        sendDiscordDebugLog("__❌Pickaxe Break__", "Player **" .. playerID .. "'s** pickaxe broke.")
+        end
         if Config.Debug then
             print('^0[^1DEBUG^0] ^5Breaking pickaxe.^1(^3see discord log for more information^1)^0')
         end

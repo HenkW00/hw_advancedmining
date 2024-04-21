@@ -10,6 +10,7 @@ Config.BreakChance = 1 -- What percentage chance should a pickaxe have to break
 Config.Anticheat = true -- Display a skillcheck at random intervals to deter autoclicking (True to enabled, false to disable)
 Config.AnticheatChance = 20 -- What percentage chance should a player be hit with the anticheat while mining? (10 = 10% chance)
 Config.Debug = true -- For printing debug statements in console (it can spamm console if a lot of players are mining)
+Config.Logs = true -- Do you want to enable discord logs for actions taken?
 Config.checkForUpdates = true -- Recommended to leave as 'true'
 
 Config.Selling = {

@@ -3,9 +3,11 @@ local sellingNPCLocation = lib.points.new(Config.Selling.coords, 40)
 local textUI, smeltStarted, failedAntiCheat = false, false, false
 local smeltingInputOptions, sellingInputOptions = {}, {}
 
+
 -- Ensures all options from Config.SmeltingOptions are inserted into the Input Dialog
 for k, v in pairs(Config.SmeltingOptions) do
     if v.smeltable then
+        Wait(20)
         table.insert(smeltingInputOptions, {value = k, label = v.label})
     end
 end
@@ -18,6 +20,7 @@ if Config.Selling.enabled then
             if string.sub(k, 1, 4) == "raw_" then
                 label = string.sub(v.label, 5)
             end
+            Wait(20)
             table.insert(sellingInputOptions, { value = k, label = label })
         end
     end
@@ -26,6 +29,7 @@ end
 -- Checks if the TextUI should be displayed or not and responds
 local function checkTextUI()
     if textUI then
+        Wait(20)
         lib.showTextUI(TextUI.label, {
             position = TextUI.position,
             icon = TextUI.icon
@@ -72,6 +76,7 @@ for _, v in pairs(Config.MiningLocations) do
     function miningZones:onEnter()
         if not Config.EnableNightMining then
             local hour = GetClockHours()
+            Wait(20)
             if hour >= 20 or hour <= 4 then return
                 ShowNotification(Notify.mineAtNight, 'error')
             end
@@ -91,10 +96,12 @@ for _, v in pairs(Config.MiningLocations) do
     function miningZones:nearby()
         if not Config.EnableNightMining then
             local hour = GetClockHours()
+            Wait(20)
             if hour >= 20 or hour <= 4 then
                 return
             else
                 if IsControlJustPressed(0, 38) then
+                    Wait(20)
                     local hasPick = HasItem(Config.PickaxeItemName, 1)
                     if hasPick >= 1 then
                         lib.hideTextUI()
@@ -106,6 +113,7 @@ for _, v in pairs(Config.MiningLocations) do
             end
         else
             if IsControlJustPressed(0, 38) then
+                Wait(20)
                 local hasPick = HasItem(Config.PickaxeItemName, 1)
                 if hasPick >= 1 then
                     lib.hideTextUI()
@@ -122,6 +130,7 @@ end
 function startMining()
     if failedAntiCheat then
         local success = lib.skillCheck({'easy'}, {'w'})
+        Wait(20)
         if success then
             -- If the player passes, resets and let them continue
             failedAntiCheat = false
@@ -132,6 +141,7 @@ function startMining()
     end
     if Config.Anticheat then
         local chance = math.random(1, 100)
+        Wait(20)
         if chance <= Config.AnticheatChance then
             local success = lib.skillCheck({'easy'}, {'w'})
             if not success then
@@ -142,6 +152,7 @@ function startMining()
     end
     if Config.BreakPickaxe then
         local chance = math.random(1, 100)
+        Wait(20)
         if chance <= Config.BreakChance then
             TriggerServerEvent('hw_advancedmining:breakPickaxe', cache.serverId)
             ShowNotification(Notify.pickaxeBroke, 'error')
@@ -157,6 +168,7 @@ function startMining()
         anim = {dict = 'melee@hatchet@streamed_core', clip = 'plyr_rear_takedown_b'},
         prop = {bone = 28422, model = 'prop_tool_pickaxe', pos = vec3(0.09, -0.05, -0.02), rot = vec3(-78.0, 13.0, 28.0)}
     }) then
+        Wait(20)
         textUI = true
         checkTextUI()
         local commonChance, mediumChance, rareChance = 60, 30, 10
@@ -165,12 +177,15 @@ function startMining()
         if randomValue <= commonChance then
             local reward = Config.CommonRewards[math.random(1, #Config.CommonRewards)]
             TriggerServerEvent('hw_advancedmining:rewardMineItem', cache.serverId, reward)
+            Wait(20)
         elseif randomValue <= commonChance + mediumChance then
             local reward = Config.MediumRewards[math.random(1, #Config.MediumRewards)]
+            Wait(20)
             TriggerServerEvent('hw_advancedmining:rewardMineItem', cache.serverId, reward)
         else
             local reward = Config.RareRewards[math.random(1, #Config.RareRewards)]
             TriggerServerEvent('hw_advancedmining:rewardMineItem', cache.serverId, reward)
+            Wait(20)
         end
     else
         ShowNotification(Notify.cancelledMining, 'error')
@@ -190,6 +205,7 @@ function startSmelt()
     else
         local hasItem = HasItem(smeltInput[1], smeltInput[2])
         if hasItem ~= nil and hasItem >= smeltInput[2] and smeltInput[2] ~= 0 and smeltInput[2] > 0 then
+            Wait(20)
             local removeItem = nil
             local giveItem = nil
             local duration = nil
@@ -213,6 +229,7 @@ function startSmelt()
                     anim = {dict = 'amb@world_human_stand_fire@male@idle_a', clip = 'idle_a'},
                     disable = {move = true, car = true, combat = true}
                 }) then
+                    Wait(20)
                     giveItem = giveItem:gsub("raw_", "")
                     TriggerServerEvent('hw_advancedmining:rewardSmeltItem', cache.serverId, removeItem, giveItem, smeltInput[2])
                     smeltStarted = false
@@ -220,6 +237,7 @@ function startSmelt()
                     local itemString = smeltInput[1]:gsub('_', ' '):gsub("(%a)([%w_']*)", function(first, rest)
                         return first:upper() .. rest:lower()
                     end)
+                    Wait(20)
                     ShowNotification(Notify.cancelledSmelting.. itemString, 'error')
                     smeltStarted = false
                 end
@@ -228,6 +246,7 @@ function startSmelt()
             local itemString = smeltInput[1]:gsub('_', ' '):gsub("(%a)([%w_']*)", function(first, rest)
                 return first:upper() .. rest:lower()
             end)
+            Wait(20)
             ShowNotification(Notify.missingItem.. itemString, 'error')
             smeltStarted = false
         end
@@ -246,6 +265,7 @@ if Config.Selling.enabled then
             local checkItem = sellInput[1]:gsub('raw_', '')
             local hasItem = HasItem(checkItem, sellInput[2])
             if hasItem ~= nil and hasItem >= sellInput[2] and sellInput[2] ~= 0 and sellInput[2] > 0 then
+                Wait(20)
                 local price = nil
                 for k, v in pairs(Config.SmeltingOptions) do
                     if k == sellInput[1] then
@@ -263,6 +283,7 @@ if Config.Selling.enabled then
                     anim = {dict = 'mp_common', clip = 'givetake1_a'},
                     disable = {move = true, car = true, combat = true}
                 }) then
+                    Wait(20)
                     TriggerServerEvent('hw_advancedmining:sellItem', cache.serverId, sellItem, sellInput[2], price)
                 else
                     ShowNotification(Notify.cancelledSell, 'error')
@@ -292,6 +313,7 @@ if Config.Selling.enabled then
         })
     end
     function sellingNPCLocation:onExit()
+        Wait(20)
         DeleteEntity(npc)
         qtarget:RemoveTargetEntity(npc, nil)
     end
