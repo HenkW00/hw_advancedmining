@@ -4,7 +4,7 @@ lua54 'yes'
 
 author 'HenkW'
 description 'Advanced mining script for ESX and QBCORE using Ox Lib'
-version '1.0.7'
+version '1.0.8'
 
 client_scripts {
     'bridge/client.lua',
