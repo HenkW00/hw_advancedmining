@@ -1,7 +1,27 @@
-# HW Scripts | Advanced Mining (Rewritten)
-A fun mining script for FiveM including mining, smelting & selling materials. Everything is configurable. Customize the mining locations, smelting location, selling location. Add more or remove materials, make them "smeltable" and/or "sellable" or not, set a price for each material when selling. Customize how long each material takes to smelt & much more!
+# HW Scripts - Advanced Mining (Rewritten)
 
-## Features
+**Description**
+
+A fun mining script for FiveM including mining, smelting & selling materials. Everything is configurable.
+
+**Author**
+- HW Development | HenkW
+
+**Changelog:**
+- Added Config.Logs to config.file for easy configuration.
+- Optimized server-side.
+- Optimized client-side.
+ 
+🛠 **Requirements**
+- OX Lib
+- OX Target / QB Target / qtarget
+- OX Inventory
+
+🌐 **Requirements Download links**
+- [ox_lib](https://github.com/overextended/ox_lib/releases)
+- [ox_target](https://github.com/overextended/ox_target/releases), [qb-target](https://github.com/qbcore-framework/qb-target) or [qtarget](https://github.com/overextended/ox_target/releases)
+
+✅ **Features**
 - Supports ESX & QBCore
 - Highly detailed config file
 - Mine for varied types of ores
@@ -23,20 +43,24 @@ A fun mining script for FiveM including mining, smelting & selling materials. Ev
 - Set chance for anticheat check if enabled
 - Customize how long a pickaxe will last before breaking (ox_inventory v2.31.0 or later required)
 
-## Changelog
-- Added Config.Logs to config.file for easy configuration.
-- Optimized server-side.
-- Optimized client-side.
+🔧 **Download & Installation**
 
-## Dependencies
-- [ox_lib](https://github.com/overextended/ox_lib/releases)
-- [ox_target](https://github.com/overextended/ox_target/releases), [qb-target](https://github.com/qbcore-framework/qb-target) or [qtarget](https://github.com/overextended/ox_target/releases)
+Follow these steps to set up the script on your ESX server:
 
-## Installation
-- Ensure you have all dependencies installed
-- Add items found in "install" folder to your inventory resource
-- Add hw_advancedmining to your 'resources' directory
-- Add 'ensure hw_advancedmining' in your 'server.cgf'
+1. **Download the Files**: Download the script files from the provided source.
 
-## Preview
-[Streamable - Lation's Mining](https://streamable.com/q8xp0l)
+2. **Copy to Server Resource Directory**: Place the `hw_advancedmining` folder in the server resource directory.
+
+3. **Update `server.cfg`**: Add the following line to your `server.cfg` file:
+
+    ```cfg
+    start hw_advancedmining
+    ```
+
+4. **Start Your Server**: Restart or start your ESX server to load the `hw_advancedmining` resource.
+
+
+If help is needed, you can contact me via discord.
+Link for that you can find in console upon restarting the script, otherwise just search for HenkW00 on google/github/CFX
+
+Enjoy the script, i hope you like it! <3
